@@ -15,6 +15,10 @@ module Hanko
       @admin ||= Api::AdminNamespace.new(@connection)
     end
 
+    def public
+      @public ||= Api::PublicNamespace.new(@connection)
+    end
+
     def inspect
       "#<#{self.class} api_url=#{config.api_url.inspect} api_key=[REDACTED]>"
     end
