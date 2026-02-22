@@ -11,6 +11,8 @@ require_relative 'hanko/api/base_resource'
 require_relative 'hanko/api/admin'
 require_relative 'hanko/api/public'
 require_relative 'hanko/client'
+require_relative 'hanko/webhook_verifier'
+require_relative 'hanko/test_helper'
 
 module Hanko
   class << self
