@@ -6,6 +6,9 @@ require 'hanko/rails/generators/install_generator'
 
 RSpec.describe Hanko::Rails::Generators::InstallGenerator do
   let(:destination) { File.expand_path('../../tmp/generator_test', __dir__) }
+  let(:generator) do
+    described_class.new([], {}, destination_root: destination)
+  end
 
   before do
     FileUtils.mkdir_p(destination)
@@ -14,10 +17,6 @@ RSpec.describe Hanko::Rails::Generators::InstallGenerator do
 
   after do
     FileUtils.rm_rf(destination)
-  end
-
-  let(:generator) do
-    described_class.new([], {}, destination_root: destination)
   end
 
   it 'creates the hanko initializer' do

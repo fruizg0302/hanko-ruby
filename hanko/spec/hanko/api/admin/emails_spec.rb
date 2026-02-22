@@ -1,40 +1,45 @@
 # frozen_string_literal: true
 
 RSpec.describe Hanko::Api::Admin::Emails do
-  let(:config) { Hanko::Configuration.new.tap { |c| c.api_url = "https://test.hanko.io"; c.api_key = "key" } }
+  subject(:emails) { described_class.new(connection, user_base) }
+
+  let(:config) do
+    Hanko::Configuration.new.tap do |c|
+      c.api_url = 'https://test.hanko.io'
+      c.api_key = 'key'
+    end
+  end
   let(:stubs) { Faraday::Adapter::Test::Stubs.new }
   let(:connection) { Hanko::Connection.new(config, adapter: [:test, stubs]) }
-  let(:user_base) { "/users/u1" }
-
-  subject(:emails) { described_class.new(connection, user_base) }
+  let(:user_base) { '/users/u1' }
 
   after { stubs.verify_stubbed_calls }
 
-  it "GET /users/:id/emails" do
-    stubs.get("/users/u1/emails") { [200, {}, '[{"id":"e1","address":"a@b.com"}]'] }
+  it 'GET /users/:id/emails' do
+    stubs.get('/users/u1/emails') { [200, {}, '[{"id":"e1","address":"a@b.com"}]'] }
     result = emails.list
-    expect(result.first.address).to eq("a@b.com")
+    expect(result.first.address).to eq('a@b.com')
   end
 
-  it "GET /users/:id/emails/:email_id" do
-    stubs.get("/users/u1/emails/e1") { [200, {}, '{"id":"e1"}'] }
-    expect(emails.get("e1").id).to eq("e1")
+  it 'GET /users/:id/emails/:email_id' do
+    stubs.get('/users/u1/emails/e1') { [200, {}, '{"id":"e1"}'] }
+    expect(emails.get('e1').id).to eq('e1')
   end
 
-  it "POST /users/:id/emails" do
-    stubs.post("/users/u1/emails", '{"address":"new@b.com"}') { [201, {}, '{"id":"e2","address":"new@b.com"}'] }
-    result = emails.create(address: "new@b.com")
-    expect(result.address).to eq("new@b.com")
+  it 'POST /users/:id/emails' do
+    stubs.post('/users/u1/emails', '{"address":"new@b.com"}') { [201, {}, '{"id":"e2","address":"new@b.com"}'] }
+    result = emails.create(address: 'new@b.com')
+    expect(result.address).to eq('new@b.com')
   end
 
-  it "DELETE /users/:id/emails/:email_id" do
-    stubs.delete("/users/u1/emails/e1") { [204, {}, ""] }
-    expect(emails.delete("e1")).to be(true)
+  it 'DELETE /users/:id/emails/:email_id' do
+    stubs.delete('/users/u1/emails/e1') { [204, {}, ''] }
+    expect { emails.delete('e1') }.not_to raise_error
   end
 
-  it "POST /users/:id/emails/:email_id/set_primary" do
-    stubs.post("/users/u1/emails/e1/set_primary") { [200, {}, '{"id":"e1","is_primary":true}'] }
-    result = emails.set_primary("e1")
+  it 'POST /users/:id/emails/:email_id/set_primary' do
+    stubs.post('/users/u1/emails/e1/set_primary') { [200, {}, '{"id":"e1","is_primary":true}'] }
+    result = emails.make_primary('e1')
     expect(result.is_primary).to be(true)
   end
 end

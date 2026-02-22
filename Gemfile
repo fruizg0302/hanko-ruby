@@ -3,8 +3,8 @@
 source 'https://rubygems.org'
 
 # Development: load both gems from path
-gem 'hanko-ruby', path: 'hanko'
 gem 'hanko-rails', path: 'hanko-rails'
+gem 'hanko-ruby', path: 'hanko'
 
 group :development, :test do
   gem 'rake', '~> 13.0'

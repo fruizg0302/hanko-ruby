@@ -17,7 +17,7 @@ module Hanko
         #
         # @return [Resource] the validated session resource
         def validate
-          response = @connection.get("/sessions/validate")
+          response = @connection.get('/sessions/validate')
           Resource.new(JSON.parse(response.body))
         end
 
@@ -26,7 +26,7 @@ module Hanko
         # @param session_token [String] the session token to validate
         # @return [Resource] the validated session resource
         def validate_token(session_token)
-          response = @connection.post("/sessions/validate", session_token: session_token)
+          response = @connection.post('/sessions/validate', session_token: session_token)
           Resource.new(JSON.parse(response.body))
         end
       end

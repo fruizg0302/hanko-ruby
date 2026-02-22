@@ -18,7 +18,7 @@ module Hanko
         # @param params [Hash] optional parameters for the login flow
         # @return [FlowResponse] the login flow response
         def login(**params)
-          post_flow("/login", params)
+          post_flow('/login', params)
         end
 
         # Initiate a registration flow.
@@ -26,7 +26,7 @@ module Hanko
         # @param params [Hash] optional parameters for the registration flow
         # @return [FlowResponse] the registration flow response
         def registration(**params)
-          post_flow("/registration", params)
+          post_flow('/registration', params)
         end
 
         # Initiate a profile management flow.
@@ -34,7 +34,7 @@ module Hanko
         # @param params [Hash] optional parameters for the profile flow
         # @return [FlowResponse] the profile flow response
         def profile(**params)
-          post_flow("/profile", params)
+          post_flow('/profile', params)
         end
 
         private

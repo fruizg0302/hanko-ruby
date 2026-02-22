@@ -22,33 +22,33 @@ RSpec.describe Hanko::Rails::Configuration do
       expect(config.exclude_paths).to eq(['/healthz'])
     end
   end
-end
 
-RSpec.describe Hanko::Rails do
-  after { described_class.reset_configuration! }
+  describe 'Hanko::Rails.configure' do
+    after { Hanko::Rails.reset_configuration! }
 
-  describe '.configure' do
     it 'yields a Configuration instance' do
-      described_class.configure do |c|
-        expect(c).to be_a(Hanko::Rails::Configuration)
+      Hanko::Rails.configure do |c|
+        expect(c).to be_a(described_class)
       end
     end
 
     it 'stores configuration globally' do
-      described_class.configure do |c|
+      Hanko::Rails.configure do |c|
         c.cookie_name = 'custom'
       end
 
-      expect(described_class.configuration.cookie_name).to eq('custom')
+      expect(Hanko::Rails.configuration.cookie_name).to eq('custom')
     end
   end
 
-  describe '.reset_configuration!' do
-    it 'resets to defaults' do
-      described_class.configure { |c| c.cookie_name = 'custom' }
-      described_class.reset_configuration!
+  describe 'Hanko::Rails.reset_configuration!' do
+    after { Hanko::Rails.reset_configuration! }
 
-      expect(described_class.configuration.cookie_name).to eq('hanko')
+    it 'resets to defaults' do
+      Hanko::Rails.configure { |c| c.cookie_name = 'custom' }
+      Hanko::Rails.reset_configuration!
+
+      expect(Hanko::Rails.configuration.cookie_name).to eq('hanko')
     end
   end
 end

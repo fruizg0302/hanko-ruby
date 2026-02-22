@@ -11,7 +11,7 @@ module Hanko
         # @param connection [Hanko::Connection] the HTTP connection to use
         # @return [AuditLogs] a new AuditLogs instance
         def initialize(connection)
-          super(connection, "/audit_logs")
+          super(connection, '/audit_logs')
         end
       end
     end

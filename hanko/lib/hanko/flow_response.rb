@@ -26,10 +26,10 @@ module Hanko
     # @param data [Hash] the parsed JSON response from a flow endpoint
     def initialize(data)
       @raw = data
-      @status = data["status"]&.to_sym
-      @actions = (data["actions"] || []).map { |a| Resource.new(a) }
-      @session_token = data.dig("payload", "session_token")
-      @user_id = data.dig("payload", "user_id")
+      @status = data['status']&.to_sym
+      @actions = (data['actions'] || []).map { |a| Resource.new(a) }
+      @session_token = data.dig('payload', 'session_token')
+      @user_id = data.dig('payload', 'user_id')
     end
 
     # Returns true when the flow has completed successfully.

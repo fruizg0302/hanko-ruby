@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "json"
+require 'json'
 
 module Hanko
   module Api
@@ -57,10 +57,10 @@ module Hanko
       # Delete a resource by its ID.
       #
       # @param id [String] the unique identifier of the resource
-      # @return [Boolean] true if deletion was successful
+      # @return [void]
       def delete(id)
         @connection.delete("#{@base_path}/#{id}")
-        true
+        nil
       end
 
       private

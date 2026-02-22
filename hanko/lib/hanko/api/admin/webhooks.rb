@@ -11,7 +11,7 @@ module Hanko
         # @param connection [Hanko::Connection] the HTTP connection to use
         # @return [Webhooks] a new Webhooks instance
         def initialize(connection)
-          super(connection, "/webhooks")
+          super(connection, '/webhooks')
         end
       end
     end

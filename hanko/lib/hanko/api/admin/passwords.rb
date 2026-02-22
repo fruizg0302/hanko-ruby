@@ -43,10 +43,10 @@ module Hanko
 
         # Delete the user's password.
         #
-        # @return [Boolean] true if deletion was successful
+        # @return [void]
         def delete
           @connection.delete(@base_path)
-          true
+          nil
         end
       end
     end

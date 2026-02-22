@@ -36,9 +36,9 @@ RSpec.describe Hanko::WebhookVerifier do
       it 'raises ExpiredTokenError' do
         token = encode_token({ 'sub' => 'user-1', 'exp' => Time.now.to_i - 300 })
 
-        expect {
+        expect do
           described_class.verify(token, jwks_url: jwks_url)
-        }.to raise_error(Hanko::ExpiredTokenError)
+        end.to raise_error(Hanko::ExpiredTokenError)
       end
     end
 
@@ -47,9 +47,9 @@ RSpec.describe Hanko::WebhookVerifier do
         other_key = OpenSSL::PKey::RSA.generate(2048)
         token = encode_token({ 'sub' => 'user-1', 'exp' => Time.now.to_i + 300 }, key: other_key)
 
-        expect {
+        expect do
           described_class.verify(token, jwks_url: jwks_url)
-        }.to raise_error(Hanko::InvalidTokenError)
+        end.to raise_error(Hanko::InvalidTokenError)
       end
     end
 
@@ -57,9 +57,9 @@ RSpec.describe Hanko::WebhookVerifier do
       it 'raises InvalidTokenError' do
         hmac_token = JWT.encode({ 'sub' => 'user-1', 'exp' => Time.now.to_i + 300 }, 'secret', 'HS256')
 
-        expect {
+        expect do
           described_class.verify(hmac_token, jwks_url: jwks_url)
-        }.to raise_error(Hanko::InvalidTokenError)
+        end.to raise_error(Hanko::InvalidTokenError)
       end
     end
 
@@ -71,9 +71,9 @@ RSpec.describe Hanko::WebhookVerifier do
       it 'raises InvalidTokenError' do
         token = encode_token({ 'sub' => 'user-1', 'exp' => Time.now.to_i + 300 })
 
-        expect {
+        expect do
           described_class.verify(token, jwks_url: jwks_url)
-        }.to raise_error(Hanko::InvalidTokenError)
+        end.to raise_error(Hanko::InvalidTokenError)
       end
     end
 
@@ -85,9 +85,9 @@ RSpec.describe Hanko::WebhookVerifier do
       it 'raises InvalidTokenError' do
         token = encode_token({ 'sub' => 'user-1', 'exp' => Time.now.to_i + 300 })
 
-        expect {
+        expect do
           described_class.verify(token, jwks_url: jwks_url)
-        }.to raise_error(Hanko::InvalidTokenError)
+        end.to raise_error(Hanko::InvalidTokenError)
       end
     end
   end

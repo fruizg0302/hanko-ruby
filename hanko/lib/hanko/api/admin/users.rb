@@ -11,7 +11,7 @@ module Hanko
         # @param connection [Hanko::Connection] the HTTP connection to use
         # @return [Users] a new Users instance
         def initialize(connection)
-          super(connection, "/users")
+          super(connection, '/users')
           @connection = connection
         end
 

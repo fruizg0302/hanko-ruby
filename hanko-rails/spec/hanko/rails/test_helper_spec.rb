@@ -28,6 +28,7 @@ RSpec.describe Hanko::Rails::TestHelper do
   describe '#sign_in_as_hanko_user' do
     it 'sets the hanko cookie with a valid JWT' do
       extend described_class
+
       sign_in_as_hanko_user('user-1')
 
       get '/'
@@ -39,6 +40,7 @@ RSpec.describe Hanko::Rails::TestHelper do
     it 'respects custom cookie name' do
       Hanko::Rails.configure { |c| c.cookie_name = 'my_session' }
       extend described_class
+
       sign_in_as_hanko_user('user-2')
 
       get '/'
@@ -51,6 +53,7 @@ RSpec.describe Hanko::Rails::TestHelper do
   describe '#sign_out_hanko_user' do
     it 'clears the hanko cookie' do
       extend described_class
+
       sign_in_as_hanko_user('user-1')
       sign_out_hanko_user
 

@@ -16,11 +16,11 @@ module Hanko
           @connection = connection
         end
 
-        # Set an email address as the primary email for the user.
+        # Mark an email address as the primary email for the user.
         #
         # @param email_id [String] the unique identifier of the email to make primary
         # @return [Resource] the updated email resource
-        def set_primary(email_id)
+        def make_primary(email_id)
           response = @connection.post("#{@base_path}/#{email_id}/set_primary")
           parse_resource(response.body)
         end

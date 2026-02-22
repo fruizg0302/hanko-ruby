@@ -83,26 +83,27 @@ RSpec.describe Hanko::Rails::Authentication do
       let(:request) { instance_double(ActionDispatch::Request, env: { 'hanko.session' => { 'sub' => 'u1' } }) }
 
       it 'does not redirect or respond' do
-        expect(controller).not_to receive(:redirect_to)
-        expect(controller).not_to receive(:head)
+        allow(controller).to receive(:redirect_to)
+        allow(controller).to receive(:head)
         controller.authenticate_hanko_user!
+        expect(controller).not_to have_received(:redirect_to)
+        expect(controller).not_to have_received(:head)
       end
     end
 
     context 'when not authenticated (HTML request)' do
       let(:request) { instance_double(ActionDispatch::Request, env: {}) }
-
-      before do
-        allow(controller).to receive(:respond_to).and_yield(format)
-        allow(controller).to receive(:redirect_to)
-      end
-
       let(:format) do
         double.tap do |f|
           allow(f).to receive(:html).and_yield
           allow(f).to receive(:json)
           allow(f).to receive(:any)
         end
+      end
+
+      before do
+        allow(controller).to receive(:respond_to).and_yield(format)
+        allow(controller).to receive(:redirect_to)
       end
 
       it 'redirects for HTML' do
@@ -113,18 +114,17 @@ RSpec.describe Hanko::Rails::Authentication do
 
     context 'when not authenticated (JSON request)' do
       let(:request) { instance_double(ActionDispatch::Request, env: {}) }
-
-      before do
-        allow(controller).to receive(:respond_to).and_yield(format)
-        allow(controller).to receive(:head)
-      end
-
       let(:format) do
         double.tap do |f|
           allow(f).to receive(:html)
           allow(f).to receive(:json).and_yield
           allow(f).to receive(:any)
         end
+      end
+
+      before do
+        allow(controller).to receive(:respond_to).and_yield(format)
+        allow(controller).to receive(:head)
       end
 
       it 'returns 401 for JSON' do

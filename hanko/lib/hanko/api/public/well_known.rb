@@ -17,7 +17,7 @@ module Hanko
         #
         # @return [Resource] the JWKS resource
         def jwks
-          response = @connection.get("/.well-known/jwks.json")
+          response = @connection.get('/.well-known/jwks.json')
           Resource.new(JSON.parse(response.body))
         end
 
@@ -25,7 +25,7 @@ module Hanko
         #
         # @return [Resource] the configuration resource
         def config
-          response = @connection.get("/.well-known/config")
+          response = @connection.get('/.well-known/config')
           Resource.new(JSON.parse(response.body))
         end
       end

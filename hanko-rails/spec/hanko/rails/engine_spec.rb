@@ -6,7 +6,7 @@ require 'hanko/rails/engine'
 
 RSpec.describe Hanko::Rails::Engine do
   it 'inherits from Rails::Engine' do
-    expect(described_class.superclass).to eq(::Rails::Engine)
+    expect(described_class.superclass).to eq(Rails::Engine)
   end
 
   it 'is named hanko_rails' do
