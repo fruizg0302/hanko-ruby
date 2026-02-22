@@ -5,6 +5,7 @@ require_relative "admin/emails"
 require_relative "admin/passwords"
 require_relative "admin/sessions"
 require_relative "admin/webauthn_credentials"
+require_relative "admin/metadata"
 
 module Hanko
   module Api
