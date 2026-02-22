@@ -3,6 +3,20 @@
 require_relative 'hanko/version'
 require_relative 'hanko/errors'
 require_relative 'hanko/resource'
+require_relative 'hanko/configuration'
 
 module Hanko
+  class << self
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def configure
+      yield(configuration)
+    end
+
+    def reset_configuration!
+      @configuration = Configuration.new
+    end
+  end
 end
