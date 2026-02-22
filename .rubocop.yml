@@ -9,6 +9,7 @@ AllCops:
     - "hanko-rails/spec/dummy/**/*"
     - "vendor/**/*"
     - ".worktrees/**/*"
+    - ".bundle/**/*"
 
 # ============================================================
 # Layout
