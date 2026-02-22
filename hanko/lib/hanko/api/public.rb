@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "public/sessions"
+require_relative "public/well_known"
 
 module Hanko
   module Api
