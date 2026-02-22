@@ -3,6 +3,7 @@
 require_relative 'hanko/version'
 require_relative 'hanko/errors'
 require_relative 'hanko/resource'
+require_relative 'hanko/flow_response'
 require_relative 'hanko/configuration'
 require_relative 'hanko/middleware/raise_error'
 require_relative 'hanko/connection'

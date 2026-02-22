@@ -2,6 +2,7 @@
 
 require_relative "public/sessions"
 require_relative "public/well_known"
+require_relative "public/flow"
 
 module Hanko
   module Api
