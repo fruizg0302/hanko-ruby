@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "admin/users"
+require_relative "admin/emails"
 
 module Hanko
   module Api
