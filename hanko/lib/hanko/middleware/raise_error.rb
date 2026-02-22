@@ -5,7 +5,22 @@ require 'json'
 
 module Hanko
   module Middleware
+    # Faraday middleware that raises typed Hanko errors for HTTP 4xx/5xx responses.
+    #
+    # Maps specific HTTP status codes to error classes:
+    # - 401 -> {AuthenticationError}
+    # - 404 -> {NotFoundError}
+    # - 429 -> {RateLimitError}
+    # - All others -> {ApiError}
     class RaiseError < Faraday::Middleware
+      # Called by Faraday after each request completes.
+      #
+      # @param env [Faraday::Env] the request/response environment
+      # @return [void]
+      # @raise [AuthenticationError] on HTTP 401
+      # @raise [NotFoundError] on HTTP 404
+      # @raise [RateLimitError] on HTTP 429
+      # @raise [ApiError] on any other HTTP 4xx/5xx
       def on_complete(env)
         return if env.status < 400
 

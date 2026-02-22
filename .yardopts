@@ -1,0 +1,4 @@
+--markup markdown
+--output-dir doc
+hanko/lib/**/*.rb
+hanko-rails/lib/**/*.rb

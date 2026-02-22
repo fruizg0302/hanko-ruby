@@ -2,11 +2,25 @@
 
 module Hanko
   module Rails
+    # Rack middleware that extracts a Hanko JWT from the request cookie or
+    # +Authorization: Bearer+ header, verifies it against the Hanko JWKS
+    # endpoint, and stores the decoded session payload in +env['hanko.session']+.
+    #
+    # Paths listed in {Configuration#exclude_paths} are skipped entirely.
     class Middleware
+      # Initializes the middleware with the next Rack application.
+      #
+      # @param app [#call] the next Rack application in the middleware stack
+      # @return [Middleware] a new middleware instance
       def initialize(app)
         @app = app
       end
 
+      # Processes an incoming request, extracts and verifies the Hanko token,
+      # and forwards the request to the next middleware.
+      #
+      # @param env [Hash] the Rack environment hash
+      # @return [Array<(Integer, Hash, #each)>] the Rack response triplet
       def call(env)
         request = Rack::Request.new(env)
 
