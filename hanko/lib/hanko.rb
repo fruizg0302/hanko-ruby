@@ -6,6 +6,7 @@ require_relative 'hanko/resource'
 require_relative 'hanko/configuration'
 require_relative 'hanko/middleware/raise_error'
 require_relative 'hanko/connection'
+require_relative 'hanko/api/base_resource'
 require_relative 'hanko/client'
 
 module Hanko
