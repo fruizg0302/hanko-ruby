@@ -8,7 +8,17 @@ AllCops:
   Exclude:
     - "hanko-rails/spec/dummy/**/*"
     - "vendor/**/*"
+    - ".worktrees/**/*"
 
+# ============================================================
+# Layout
+# ============================================================
+Layout/LineLength:
+  Max: 120
+
+# ============================================================
+# Style
+# ============================================================
 Naming/FileName:
   Exclude:
     - "hanko-rails/lib/hanko-rails.rb"
@@ -20,14 +30,100 @@ Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
 
+# ============================================================
+# Lint — correctness issues that indicate bugs or dead code
+# ============================================================
+Lint/UselessAssignment:
+  Enabled: true
+
+Lint/AmbiguousRegexpLiteral:
+  Enabled: true
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
+Lint/UnusedMethodArgument:
+  Enabled: true
+  AllowUnusedKeywordArguments: true
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: true
+
+Lint/DuplicateMethods:
+  Enabled: true
+
+Lint/EmptyConditionalBody:
+  Enabled: true
+
+Lint/MissingSuper:
+  Enabled: true
+
+# ============================================================
+# Security — dangerous method usage
+# ============================================================
+Security/Eval:
+  Enabled: true
+
+Security/Open:
+  Enabled: true
+
+Security/YAMLLoad:
+  Enabled: true
+
+Security/JSONLoad:
+  Enabled: true
+
+# ============================================================
+# Metrics — pragmatic thresholds that catch genuinely
+# problematic code without penalizing normal patterns.
+# Specs and gemspecs are excluded where appropriate.
+# ============================================================
+Metrics/MethodLength:
+  Enabled: true
+  Max: 25
+  Exclude:
+    - "**/spec/**/*"
+
+Metrics/ClassLength:
+  Enabled: true
+  Max: 250
+  Exclude:
+    - "**/spec/**/*"
+
+Metrics/CyclomaticComplexity:
+  Enabled: true
+  Max: 12
+
+Metrics/PerceivedComplexity:
+  Enabled: true
+  Max: 14
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 35
+  Exclude:
+    - "**/spec/**/*"
+
 Metrics/BlockLength:
   Exclude:
     - "**/*.gemspec"
     - "**/spec/**/*"
 
-Layout/LineLength:
-  Max: 120
+# ============================================================
+# Naming — basic conventions
+# ============================================================
+Naming/MethodName:
+  Enabled: true
 
+Naming/VariableName:
+  Enabled: true
+
+Naming/ConstantName:
+  Enabled: true
+
+# ============================================================
+# RSpec
+# ============================================================
 RSpec/ExampleLength:
   Max: 15
 

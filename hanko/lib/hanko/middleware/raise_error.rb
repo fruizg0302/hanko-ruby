@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "faraday"
-require "json"
+require 'faraday'
+require 'json'
 
 module Hanko
   module Middleware
@@ -10,7 +10,7 @@ module Hanko
         return if env.status < 400
 
         body = parse_body(env.body)
-        message = body["message"] || body["error"] || "HTTP #{env.status}"
+        message = body['message'] || body['error'] || "HTTP #{env.status}"
 
         raise error_for(env.status, message, body, env.response_headers)
       end
@@ -24,7 +24,7 @@ module Hanko
         when 404
           NotFoundError.new(message, status: status, body: body)
         when 429
-          retry_after = headers["Retry-After"]&.to_i
+          retry_after = headers['Retry-After']&.to_i
           RateLimitError.new(message, status: status, body: body, retry_after: retry_after)
         else
           ApiError.new(message, status: status, body: body)

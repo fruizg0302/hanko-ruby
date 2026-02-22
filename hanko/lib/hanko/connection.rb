@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "faraday"
-require "json"
-require_relative "middleware/raise_error"
+require 'faraday'
+require 'json'
+require_relative 'middleware/raise_error'
 
 module Hanko
   class Connection
@@ -36,9 +36,9 @@ module Hanko
 
     def build_connection(config, adapter)
       Faraday.new(url: config.api_url) do |f|
-        f.headers["Content-Type"] = "application/json"
-        f.headers["Accept"] = "application/json"
-        f.headers["Authorization"] = "Bearer #{config.api_key}" if config.api_key
+        f.headers['Content-Type'] = 'application/json'
+        f.headers['Accept'] = 'application/json'
+        f.headers['Authorization'] = "Bearer #{config.api_key}" if config.api_key
 
         f.options.timeout = config.timeout
         f.options.open_timeout = config.open_timeout

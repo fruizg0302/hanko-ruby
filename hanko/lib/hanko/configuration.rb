@@ -21,7 +21,7 @@ module Hanko
     def inspect
       attrs = ATTRIBUTES.map do |key|
         value = send(key)
-        value = "[REDACTED]" if key == :api_key && value
+        value = '[REDACTED]' if key == :api_key && value
         "#{key}=#{value.inspect}"
       end
       "#<#{self.class} #{attrs.join(', ')}>"

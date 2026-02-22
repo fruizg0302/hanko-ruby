@@ -27,7 +27,7 @@ module Hanko
     end
 
     def validate_config!
-      raise ConfigurationError, "api_url is required" unless config.api_url
+      raise ConfigurationError, 'api_url is required' unless config.api_url
     end
   end
 end
