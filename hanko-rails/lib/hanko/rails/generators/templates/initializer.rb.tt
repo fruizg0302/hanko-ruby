@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+# Hanko SDK configuration
+Hanko.configure do |config|
+  # Your Hanko API URL (required)
+  config.api_url = ENV.fetch('HANKO_API_URL', 'https://your-hanko-instance.hanko.io')
+
+  # Optional: Admin API key for server-side operations
+  # config.api_key = ENV.fetch('HANKO_API_KEY', nil)
+end
+
+# Hanko Rails integration configuration
+Hanko::Rails.configure do |config|
+  # Cookie name used by the Hanko frontend SDK (default: "hanko")
+  # config.cookie_name = 'hanko'
+
+  # Paths to exclude from session extraction (e.g., health checks)
+  # config.exclude_paths = ['/healthz', '/up']
+
+  # JWKS cache TTL in seconds (default: 3600)
+  # config.jwks_cache_ttl = 3600
+end
