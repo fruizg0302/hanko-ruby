@@ -5,9 +5,10 @@ module Hanko
     attr_reader :config
 
     def initialize(**options)
+      @adapter = options.delete(:adapter)
       @config = build_config(options)
       validate_config!
-      @connection = Connection.new(@config)
+      @connection = Connection.new(@config, adapter: @adapter)
     end
 
     def admin
