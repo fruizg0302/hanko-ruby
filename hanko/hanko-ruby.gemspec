@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require_relative 'lib/hanko/rails/version'
+require_relative 'lib/hanko/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'hanko-rails'
-  spec.version       = Hanko::Rails::VERSION
+  spec.name          = 'hanko-ruby'
+  spec.version       = Hanko::VERSION
   spec.authors       = ['Fernando Ruiz']
   spec.email         = ['fruizg0302@me.com']
 
-  spec.summary       = 'Rails integration for the Hanko authentication platform'
-  spec.description   = 'Rack middleware, controller concerns, and generators for ' \
-                       'integrating Hanko authentication into Rails applications.'
+  spec.summary       = 'Ruby SDK for the Hanko authentication platform'
+  spec.description   = 'Full-featured Ruby client for the Hanko API: ' \
+                       'session verification (JWKS/JWT), Admin API, Flow API, and webhook verification.'
   spec.homepage      = 'https://github.com/fruizg0302/hanko-ruby'
   spec.license       = 'MIT'
 
@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir['lib/**/*', 'LICENSE.txt', 'README.md']
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'hanko', Hanko::Rails::VERSION
-  spec.add_dependency 'railties', '>= 7.0'
+  spec.add_dependency 'concurrent-ruby', '~> 1.0'
+  spec.add_dependency 'faraday', '~> 2.0'
+  spec.add_dependency 'jwt', '~> 2.7'
 end

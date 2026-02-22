@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-#### `hanko` gem
+#### `hanko-ruby` gem
 
 - `Hanko::Client` with global and per-client configuration
 - `Hanko::Configuration` with sensible defaults and credential redaction
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error hierarchy: `Error`, `ConfigurationError`, `InvalidTokenError`, `ExpiredTokenError`, `JwksError`, `ConnectionError`, `ApiError`, `AuthenticationError`, `NotFoundError`, `RateLimitError`
 - Thread-safe JWKS cache via `concurrent-ruby`
 
-#### `hanko-rails` gem
+#### `hanko-ruby-rails` gem
 
 - `Hanko::Rails::Engine` for automatic middleware registration
 - `Hanko::Rails::Middleware` -- extracts tokens from cookies or `Authorization: Bearer` header, verifies via JWKS, sets `hanko.session` in the Rack env

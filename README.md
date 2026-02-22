@@ -1,7 +1,7 @@
 # Hanko Ruby SDK
 
 [![CI](https://github.com/fruizg0302/hanko-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/fruizg0302/hanko-ruby/actions)
-[![Gem Version](https://badge.fury.io/rb/hanko.svg)](https://rubygems.org/gems/hanko)
+[![Gem Version](https://badge.fury.io/rb/hanko-ruby.svg)](https://rubygems.org/gems/hanko-ruby)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Ruby SDK for the [Hanko](https://www.hanko.io/) authentication platform. Verify sessions, manage users via the Admin API, drive login/registration flows, and handle webhooks -- all from Ruby.
@@ -10,8 +10,8 @@ Ruby SDK for the [Hanko](https://www.hanko.io/) authentication platform. Verify 
 
 | Gem | Description |
 |-----|-------------|
-| **[hanko](hanko/)** | Core Ruby client (framework-agnostic). Session verification, Admin API, Flow API, webhook verification. |
-| **[hanko-rails](hanko-rails/)** | Rails integration. Rack middleware, controller concern, install generator, and test helpers. |
+| **[hanko-ruby](hanko/)** | Core Ruby client (framework-agnostic). Session verification, Admin API, Flow API, webhook verification. |
+| **[hanko-ruby-rails](hanko-rails/)** | Rails integration. Rack middleware, controller concern, install generator, and test helpers. |
 
 ## Installation
 
@@ -19,14 +19,14 @@ Ruby SDK for the [Hanko](https://www.hanko.io/) authentication platform. Verify 
 
 ```ruby
 # Gemfile
-gem 'hanko'
+gem 'hanko-ruby'
 ```
 
 ### With Rails integration
 
 ```ruby
 # Gemfile
-gem 'hanko-rails'   # pulls in hanko automatically
+gem 'hanko-ruby-rails'   # pulls in hanko-ruby automatically
 ```
 
 Then run:
@@ -264,7 +264,7 @@ end
 
 ## Rails Integration
 
-The `hanko-rails` gem provides automatic session verification, controller helpers, and an install generator.
+The `hanko-ruby-rails` gem provides automatic session verification, controller helpers, and an install generator.
 
 ### Setup
 
@@ -459,7 +459,7 @@ The SDK only fetches JWKS from the configured `api_url` domain. Webhook verifica
 ## Requirements
 
 - Ruby >= 3.1 (tested on 3.1, 3.2, 3.3, 3.4)
-- Rails >= 7.0 (for `hanko-rails`, tested on 7.0, 7.1, 7.2, 8.0, 8.1)
+- Rails >= 7.0 (for `hanko-ruby-rails`, tested on 7.0, 7.1, 7.2, 8.0, 8.1)
 
 ## Contributing
 
