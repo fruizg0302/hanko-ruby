@@ -7,6 +7,7 @@ SimpleCov.start do
 end
 
 require 'hanko'
+require 'hanko/test_helper'
 require 'webmock/rspec'
 
 WebMock.disable_net_connect!

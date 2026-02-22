@@ -12,7 +12,6 @@ require_relative 'hanko/api/admin'
 require_relative 'hanko/api/public'
 require_relative 'hanko/client'
 require_relative 'hanko/webhook_verifier'
-require_relative 'hanko/test_helper'
 
 # Top-level module for the Hanko Ruby SDK.
 #

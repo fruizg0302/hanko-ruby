@@ -7,6 +7,8 @@ SimpleCov.start do
 end
 
 require 'hanko-rails'
+require 'hanko/test_helper'
+require 'hanko/rails/test_helper'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
