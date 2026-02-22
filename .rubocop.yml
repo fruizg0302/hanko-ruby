@@ -1,0 +1,35 @@
+plugins:
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "hanko-rails/spec/dummy/**/*"
+    - "vendor/**/*"
+
+Naming/FileName:
+  Exclude:
+    - "hanko-rails/lib/hanko-rails.rb"
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*.gemspec"
+    - "**/spec/**/*"
+
+Layout/LineLength:
+  Max: 120
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleExpectations:
+  Max: 5

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "simplecov"
+require 'simplecov'
 SimpleCov.start do
-  add_filter "/spec/"
+  add_filter '/spec/'
   enable_coverage :branch
 end
 
-require "hanko-rails"
+require 'hanko-rails'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
