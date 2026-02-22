@@ -7,6 +7,7 @@ require_relative "admin/sessions"
 require_relative "admin/webauthn_credentials"
 require_relative "admin/metadata"
 require_relative "admin/webhooks"
+require_relative "admin/audit_logs"
 
 module Hanko
   module Api
