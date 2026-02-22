@@ -1,35 +1,19 @@
-# Hanko Ruby SDK
+# hanko-ruby
 
 [![CI](https://github.com/fruizg0302/hanko-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/fruizg0302/hanko-ruby/actions)
 [![Gem Version](https://badge.fury.io/rb/hanko-ruby.svg)](https://rubygems.org/gems/hanko-ruby)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Ruby SDK for the [Hanko](https://www.hanko.io/) authentication platform. Verify sessions, manage users via the Admin API, drive login/registration flows, and handle webhooks -- all from Ruby.
+Framework-agnostic Ruby SDK for the [Hanko](https://www.hanko.io/) authentication platform. Verify sessions, manage users via the Admin API, drive login/registration flows, and handle webhooks.
 
-## Gems
-
-| Gem | Description |
-|-----|-------------|
-| **[hanko-ruby](hanko/)** | Core Ruby client (framework-agnostic). Session verification, Admin API, Flow API, webhook verification. |
-| **[hanko-rails](hanko-rails/)** | Rails integration. Rack middleware, controller concern, install generator, and test helpers. |
+> **Looking for Rails integration?** See [hanko-rails](https://rubygems.org/gems/hanko-rails) for middleware, controller helpers, and generators.
 
 ## Installation
-
-### Core gem only (any Ruby app)
 
 ```ruby
 # Gemfile
 gem 'hanko-ruby'
 ```
-
-### With Rails integration
-
-```ruby
-# Gemfile
-gem 'hanko-rails'   # pulls in hanko-ruby automatically
-```
-
-Then run:
 
 ```sh
 bundle install
@@ -66,7 +50,7 @@ Hanko.configure do |config|
   config.retry_count    = 1       # number of retries (default: 1)
   config.clock_skew     = 0       # allowed JWT clock skew in seconds (default: 0)
   config.jwks_cache_ttl = 3600    # JWKS cache lifetime in seconds (default: 3600)
-  config.logger         = Rails.logger
+  config.logger         = Logger.new($stdout)
   config.log_level      = :info   # default: :info
 end
 ```
@@ -86,8 +70,6 @@ admin_client = Hanko::Client.new(
 Global and per-client settings can be mixed; per-client values take precedence.
 
 ## Session Verification
-
-The primary use case: verify a Hanko JWT using the instance's JWKS endpoint.
 
 ### Via the Public API
 
@@ -238,118 +220,31 @@ config = client.public.well_known.config
 Verify incoming webhook payloads from Hanko:
 
 ```ruby
-class WebhooksController < ApplicationController
-  skip_before_action :verify_authenticity_token
+token = request.headers['X-Hanko-Webhook-Token']
+payload = Hanko::WebhookVerifier.verify(
+  token,
+  jwks_url: "#{ENV.fetch('HANKO_API_URL')}/.well-known/jwks.json"
+)
 
-  def create
-    token = request.headers['X-Hanko-Webhook-Token']
-    payload = Hanko::WebhookVerifier.verify(
-      token,
-      jwks_url: "#{ENV.fetch('HANKO_API_URL')}/.well-known/jwks.json"
-    )
-
-    case payload['evt']
-    when 'user.create'
-      User.create!(hanko_id: payload['sub'])
-    when 'user.delete'
-      User.find_by(hanko_id: payload['sub'])&.destroy
-    end
-
-    head :ok
-  rescue Hanko::InvalidTokenError, Hanko::ExpiredTokenError => e
-    head :unauthorized
-  end
-end
-```
-
-## Rails Integration
-
-The `hanko-rails` gem provides automatic session verification, controller helpers, and an install generator.
-
-### Setup
-
-```sh
-# Generate the initializer
-bin/rails generate hanko:install
-```
-
-This creates `config/initializers/hanko.rb`:
-
-```ruby
-Hanko.configure do |config|
-  config.api_url = ENV.fetch('HANKO_API_URL', 'https://your-hanko-instance.hanko.io')
-  # config.api_key = ENV.fetch('HANKO_API_KEY', nil)
-end
-
-Hanko::Rails.configure do |config|
-  # config.cookie_name = 'hanko'
-  # config.exclude_paths = ['/healthz', '/up']
-  # config.jwks_cache_ttl = 3600
-end
-```
-
-### Middleware
-
-The `Hanko::Rails::Middleware` is automatically inserted into the Rack stack by the engine. It:
-
-1. Extracts tokens from the `hanko` cookie or `Authorization: Bearer` header
-2. Verifies the JWT against the JWKS endpoint
-3. Sets `request.env['hanko.session']` with the decoded payload
-
-Configure which paths to skip:
-
-```ruby
-Hanko::Rails.configure do |config|
-  config.exclude_paths = ['/healthz', '/up', '/assets']
-end
-```
-
-### Authentication Concern
-
-Include `Hanko::Rails::Authentication` in your controllers:
-
-```ruby
-class ApplicationController < ActionController::Base
-  include Hanko::Rails::Authentication
-
-  before_action :authenticate_hanko_user!
-end
-```
-
-Available helpers:
-
-| Helper | Returns |
-|--------|---------|
-| `hanko_session` | Decoded JWT payload hash, or `nil` |
-| `hanko_user_id` | The `sub` claim (user UUID), or `nil` |
-| `hanko_authenticated?` | `true` if a valid session exists |
-| `current_hanko_user` | Alias for `hanko_user_id` |
-| `authenticate_hanko_user!` | Redirects (HTML) or returns 401 (JSON) if unauthenticated |
-
-All helpers except `authenticate_hanko_user!` are also available in views.
-
-### Using with your User model
-
-```ruby
-class ApplicationController < ActionController::Base
-  include Hanko::Rails::Authentication
-
-  def current_user
-    @current_user ||= User.find_by(hanko_id: hanko_user_id) if hanko_authenticated?
-  end
-  helper_method :current_user
+case payload['evt']
+when 'user.create'
+  User.create!(hanko_id: payload['sub'])
+when 'user.delete'
+  User.find_by(hanko_id: payload['sub'])&.destroy
 end
 ```
 
 ## Testing
 
-Both gems ship with test helpers to make it easy to write specs without hitting the Hanko API.
-
-### Core gem: `Hanko::TestHelper`
+The test helper is **opt-in** — require it explicitly:
 
 ```ruby
 require 'hanko/test_helper'
+```
 
+### Available helpers
+
+```ruby
 # Generate a signed JWT for testing
 token = Hanko::TestHelper.generate_test_token(
   sub: 'user-uuid',
@@ -371,32 +266,9 @@ payload = verifier.verify('any-token')
 puts payload['sub']  # => 'user-uuid'
 ```
 
-### Rails gem: `Hanko::Rails::TestHelper`
-
-```ruby
-# spec/support/hanko.rb
-RSpec.configure do |config|
-  config.include Hanko::Rails::TestHelper, type: :request
-end
-
-# In your request specs
-RSpec.describe 'Dashboard', type: :request do
-  it 'requires authentication' do
-    get '/dashboard'
-    expect(response).to have_http_status(:unauthorized)
-  end
-
-  it 'shows dashboard for authenticated user' do
-    sign_in_as_hanko_user('user-uuid')
-    get '/dashboard'
-    expect(response).to have_http_status(:ok)
-  end
-end
-```
-
 ## Error Handling
 
-All errors inherit from `Hanko::Error`. The hierarchy:
+All errors inherit from `Hanko::Error`:
 
 ```
 Hanko::Error
@@ -411,8 +283,6 @@ Hanko::Error
     └── Hanko::RateLimitError        # 429 Too Many Requests
 ```
 
-### Catching errors
-
 ```ruby
 begin
   client.admin.users.get('nonexistent-uuid')
@@ -424,7 +294,6 @@ rescue Hanko::AuthenticationError
   puts "Invalid API key"
 rescue Hanko::ApiError => e
   puts "API error: #{e.message} (HTTP #{e.status})"
-  puts e.body  # parsed response body
 rescue Hanko::Error => e
   puts "Hanko error: #{e.message}"
 end
@@ -432,41 +301,20 @@ end
 
 ## Security
 
-### Algorithm pinning
-
-All JWT verification is pinned to **RS256**. No algorithm negotiation or `none` algorithm is accepted.
-
-### Credential redaction
-
-`Hanko::Client#inspect` and `Hanko::Configuration#inspect` redact the API key, so credentials are never accidentally leaked to logs:
-
-```ruby
-client = Hanko::Client.new(api_url: 'https://example.hanko.io', api_key: 'secret')
-puts client.inspect
-# => #<Hanko::Client api_url="https://example.hanko.io" api_key=[REDACTED]>
-```
-
-### JWKS trust
-
-The SDK only fetches JWKS from the configured `api_url` domain. Webhook verification requires an explicit `jwks_url` parameter -- the URL is never inferred from untrusted input.
-
-### Dependency security
-
-- **faraday** (~> 2.0) -- HTTP client with middleware support
-- **jwt** (~> 2.7) -- RFC 7519 JWT implementation
-- **concurrent-ruby** (~> 1.0) -- thread-safe data structures
+- **Algorithm pinning** — All JWT verification is pinned to RS256. No algorithm negotiation or `none` algorithm is accepted.
+- **Credential redaction** — `Hanko::Client#inspect` and `Hanko::Configuration#inspect` redact the API key so credentials are never leaked to logs.
+- **JWKS trust** — The SDK only fetches JWKS from the configured `api_url` domain. Webhook verification requires an explicit `jwks_url` parameter.
 
 ## Requirements
 
-- Ruby >= 3.1 (tested on 3.1, 3.2, 3.3, 3.4)
-- Rails >= 7.0 (for `hanko-rails`, tested on 7.0, 7.1, 7.2, 8.0, 8.1)
+- Ruby >= 3.1
 
 ## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/my-feature`)
 3. Write tests for your changes
-4. Ensure all tests pass: `bundle exec rspec` in both `hanko/` and `hanko-rails/`
+4. Ensure all tests pass: `bundle exec rspec`
 5. Ensure linting passes: `bundle exec rubocop`
 6. Commit your changes (`git commit -m 'Add my feature'`)
 7. Push to the branch (`git push origin feature/my-feature`)

@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 2026-02-22
+
+### Changed
+
+- Added per-gem `Gemfile` for independent CI runs (`hanko/Gemfile`, `hanko-rails/Gemfile`)
+- Made test helpers opt-in: `require 'hanko/test_helper'` and `require 'hanko/rails/test_helper'` are no longer auto-required
+
+## [0.1.3] - 2026-02-22
+
+### Changed
+
+- Resolved all RuboCop offenses across both gems
+- Renamed `Emails#set_primary` to `Emails#make_primary` for clarity
+- `delete` methods now return `nil` (void) instead of an empty response
+
+## [0.1.2] - 2026-02-22
+
+### Changed
+
+- Bound `railties` dependency to `>= 7.0, < 9.0` in `hanko-rails`
+- Deduplicated metadata URIs in gemspecs
+
+## [0.1.1] - 2026-02-22
+
+### Changed
+
+- Renamed core gem from `hanko` to `hanko-ruby` (yanked `hanko` 0.1.0 from RubyGems)
+- `hanko-rails` dependency updated to require `hanko-ruby`
+
 ## [0.1.0] - 2026-02-22
 
 ### Added
@@ -18,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Session verification via `Hanko::Api::Public::Sessions` (validate, validate_token)
 - Admin API namespace with full CRUD:
   - `Users` with user-scoped sub-resources (`UserContext`)
-  - `Emails` (list, create, delete, set_primary)
+  - `Emails` (list, create, delete, make_primary)
   - `Passwords` (create, get, update, delete)
   - `Sessions` (list, delete)
   - `WebauthnCredentials` (list, delete)
@@ -43,4 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Hanko::Rails::TestHelper` with `sign_in_as_hanko_user` and `sign_out_hanko_user`
 - `Hanko::Rails::Generators::InstallGenerator` (`rails generate hanko:install`)
 
+[0.1.4]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.3...v0.1.4
+[0.1.3]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/fruizg0302/hanko-ruby/releases/tag/v0.1.0
