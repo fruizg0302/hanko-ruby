@@ -11,7 +11,7 @@ Ruby SDK for the [Hanko](https://www.hanko.io/) authentication platform. Verify 
 | Gem | Description |
 |-----|-------------|
 | **[hanko-ruby](hanko/)** | Core Ruby client (framework-agnostic). Session verification, Admin API, Flow API, webhook verification. |
-| **[hanko-ruby-rails](hanko-rails/)** | Rails integration. Rack middleware, controller concern, install generator, and test helpers. |
+| **[hanko-rails](hanko-rails/)** | Rails integration. Rack middleware, controller concern, install generator, and test helpers. |
 
 ## Installation
 
@@ -26,7 +26,7 @@ gem 'hanko-ruby'
 
 ```ruby
 # Gemfile
-gem 'hanko-ruby-rails'   # pulls in hanko-ruby automatically
+gem 'hanko-rails'   # pulls in hanko-ruby automatically
 ```
 
 Then run:
@@ -264,7 +264,7 @@ end
 
 ## Rails Integration
 
-The `hanko-ruby-rails` gem provides automatic session verification, controller helpers, and an install generator.
+The `hanko-rails` gem provides automatic session verification, controller helpers, and an install generator.
 
 ### Setup
 
@@ -459,7 +459,7 @@ The SDK only fetches JWKS from the configured `api_url` domain. Webhook verifica
 ## Requirements
 
 - Ruby >= 3.1 (tested on 3.1, 3.2, 3.3, 3.4)
-- Rails >= 7.0 (for `hanko-ruby-rails`, tested on 7.0, 7.1, 7.2, 8.0, 8.1)
+- Rails >= 7.0 (for `hanko-rails`, tested on 7.0, 7.1, 7.2, 8.0, 8.1)
 
 ## Contributing
 

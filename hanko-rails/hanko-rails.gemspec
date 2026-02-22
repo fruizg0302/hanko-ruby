@@ -3,7 +3,7 @@
 require_relative 'lib/hanko/rails/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'hanko-ruby-rails'
+  spec.name          = 'hanko-rails'
   spec.version       = Hanko::Rails::VERSION
   spec.authors       = ['Fernando Ruiz']
   spec.email         = ['fruizg0302@me.com']
