@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 3.1'
 
   spec.metadata['homepage_uri']    = spec.homepage
-  spec.metadata['source_code_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = "#{spec.homepage}/tree/main/hanko-rails"
   spec.metadata['changelog_uri']   = "#{spec.homepage}/blob/main/CHANGELOG.md"
   spec.metadata['rubygems_mfa_required'] = 'true'
 
@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'hanko-ruby', Hanko::Rails::VERSION
-  spec.add_dependency 'railties', '>= 7.0'
+  spec.add_dependency 'railties', '>= 7.0', '< 9.0'
 end
