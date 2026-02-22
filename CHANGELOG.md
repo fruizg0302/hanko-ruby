@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 2026-02-22
+
+### Added
+
+- Per-gem `README.md` included in published gem packages (visible on RubyGems.org)
+- Per-gem `LICENSE.txt` included in published gem packages
+- `bug_tracker_uri` and `documentation_uri` gemspec metadata
+
+### Fixed
+
+- Stale `set_primary` reference in root README (renamed to `make_primary` in 0.1.3)
+
 ## [0.1.4] - 2026-02-22
 
 ### Changed
@@ -72,6 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Hanko::Rails::TestHelper` with `sign_in_as_hanko_user` and `sign_out_hanko_user`
 - `Hanko::Rails::Generators::InstallGenerator` (`rails generate hanko:install`)
 
+[0.1.5]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/fruizg0302/hanko-ruby/compare/v0.1.1...v0.1.2
